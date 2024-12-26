@@ -57,11 +57,12 @@ export class UserController {
             const {email,password} = data;
 
         //confirm the login 
-        const result = this.UserService.login(email,password);
+        const result = await this.UserService.login(email,password);
         if(!result){
             throw new UnauthorizedException("Invalid Credentials");
         }
 
+        console.log(result);
         //Genrate token and send to user
         const payload = {
             email:email

@@ -27,12 +27,14 @@ export class UserService {
     //Login user
     async login(email:string,password:string){
         const user = await this.UserModel.findOne({email:email});
-        if(!User){
+        console.log(user);
+        if(!user){
             return false;
         }
 
         //compare password
         const hashedpass:string = user.password;
+        console.log("user",user);
         return await checkPass(hashedpass,password);
     }
 

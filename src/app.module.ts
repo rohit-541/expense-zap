@@ -13,11 +13,11 @@ import { FileuploadController } from './fileupload/fileupload.controller';
 import { FileuploadModule } from './fileupload/fileupload.module';
 
 @Module({
-  imports: [UserModule,MongooseModule.forRoot('mongodb://localhost:27017/ExpenseZap'),ConfigModule.forRoot(
+  imports: [ConfigModule.forRoot(
     {
       isGlobal:true,
     }
-  ), AuthModule, ExpenseModule, FileuploadModule],
+  ),UserModule,MongooseModule.forRoot(process.env.dataBaseURL), AuthModule, ExpenseModule, FileuploadModule],
   controllers: [AppController],
   providers: [AppService],
 })
