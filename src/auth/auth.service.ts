@@ -17,7 +17,7 @@ export class AuthService implements CanActivate{
             const result = await this.jwtService.verifyAsync(token,{
                 secret:process.env.SECRETKEY
             })
-            console.log(result);
+            request.email = result.email; 
             return result;
         } catch (error) {
             throw new UnauthorizedException("Invalid Token");

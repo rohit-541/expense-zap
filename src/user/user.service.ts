@@ -35,4 +35,13 @@ export class UserService {
         const hashedpass:string = user.password;
         return await checkPass(hashedpass,password);
     }
+
+    async userDetails(userEmail:string){
+        const user = await this.UserModel.findOne({email:userEmail}).select('-password ');
+        if(!user){
+            throw new BadRequestException("User not found");
+        }
+
+        return user;
+    }
 }

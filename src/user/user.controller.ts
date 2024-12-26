@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Post, UnauthorizedException, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Post, Req, UnauthorizedException, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDoc } from './user.Schema';
 import { hashPassword } from './hashedpassword';
@@ -6,6 +6,7 @@ import mongoose, { MongooseError } from 'mongoose';
 import { loginDTO, RegisterUserDTO } from './user.data.validation';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from 'src/auth/auth.service';
+import { request } from 'http';
 
 @Controller('user')
 export class UserController {
@@ -16,13 +17,17 @@ export class UserController {
     //All Get requests
     @UseGuards(AuthService)
     @Get('/')
-    Hello(){
-        return "Hello"
+    async userDetails(@Req() req:any){
+        const userEmail = req.email;
+        try {
+            const result = await this.UserService.userDetails(userEmail);
+            return result;
+        } catch (error) {
+            throw error;
+        }
     }
 
-
     //All Post requests
-
     //Register new User
     @Post('/register')
     @UsePipes(new ValidationPipe())
