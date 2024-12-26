@@ -8,13 +8,16 @@ import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { ExpenseModule } from './expense/expense.module';
+import { FileuploadService } from './fileupload/fileupload.service';
+import { FileuploadController } from './fileupload/fileupload.controller';
+import { FileuploadModule } from './fileupload/fileupload.module';
 
 @Module({
   imports: [UserModule,MongooseModule.forRoot('mongodb://localhost:27017/ExpenseZap'),ConfigModule.forRoot(
     {
       isGlobal:true,
     }
-  ), AuthModule, ExpenseModule],
+  ), AuthModule, ExpenseModule, FileuploadModule],
   controllers: [AppController],
   providers: [AppService],
 })

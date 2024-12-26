@@ -37,7 +37,4 @@ export class ExpenseService {
         const result = await this.ExpenseModel.findByIdAndDelete(id);
         return result;
     }
-
-    
-    
 }
