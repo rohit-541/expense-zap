@@ -1,12 +1,10 @@
 import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Post, Req, UnauthorizedException, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserDoc } from './user.Schema';
 import { hashPassword } from './hashedpassword';
-import mongoose, { MongooseError } from 'mongoose';
+import { MongooseError } from 'mongoose';
 import { loginDTO, RegisterUserDTO } from './user.data.validation';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from 'src/auth/auth.service';
-import { request } from 'http';
 
 @Controller('user')
 export class UserController {
@@ -77,5 +75,26 @@ export class UserController {
         } catch (error) {
             throw error;
         }        
+    }
+
+    @UseGuards(AuthService)
+    @Post('/update')
+    async update(@Body() data:any,@Req() req:any){
+        const email:string = req.email;
+        try {
+            const updatedUser = await this.UserService.update(data,email);
+            return updatedUser;
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
+    @UseGuards(AuthService)
+    @Post('/resetPassword')
+    async resetPassword(@Req() req:any){
+        const email:string = req.email;
+
+        
     }
 }

@@ -44,4 +44,26 @@ export class UserService {
 
         return user;
     }
+
+    async update(data:any,email:string){
+        const user = await this.UserModel.findOne({email:email});
+        if(!user){
+            throw new UnauthorizedException("User not found");
+        }
+
+        if(data.name){
+            user.name = data.name;
+        }
+
+        if(data.number){
+            user.number = data.number;
+        }
+
+        if(data.gender){
+            user.gender = data.gender;
+        }
+        
+        const updatedUser = await user.save();
+        return updatedUser;
+    }
 }
